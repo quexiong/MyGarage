@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://qxadmin:Leonidas1738@cluster0-9wgty.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "holdthedoor"
+}
