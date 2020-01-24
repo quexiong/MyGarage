@@ -12,7 +12,7 @@ const User = require("../../models/User");
 // @access      Private
 router.get("/mycars", auth, async (req, res) => {
   try {
-    const cars = await Car.find({
+    let cars = await Car.find({
       user: req.user.id
     });
     if (cars.length == 0) {
@@ -104,7 +104,7 @@ router.put(
     carFields.model = model;
 
     try {
-      const car = await Car.findOneAndUpdate(
+      let car = await Car.findOneAndUpdate(
         { _id: carFields.id },
         {
           $set: carFields
@@ -124,7 +124,7 @@ router.put(
 // @access      Private
 router.delete("/:id", auth, async (req, res) => {
   try {
-    const car = await Car.findById(req.params.id);
+    let car = await Car.findById(req.params.id);
     if (!car) {
       return res.status(404).json({ msg: "Car not found" });
     }
