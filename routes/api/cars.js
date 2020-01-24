@@ -119,7 +119,7 @@ router.put(
   }
 );
 
-// @route       POST api/cars/:carid
+// @route       POST api/cars/:car_id
 // @description Delete car by id
 // @access      Private
 router.delete("/:id", auth, async (req, res) => {
