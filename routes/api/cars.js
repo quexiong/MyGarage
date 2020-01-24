@@ -105,23 +105,14 @@ router.put(
     carFields.make = make;
     carFields.model = model;
 
-    console.log(carFields);
-
     try {
-      console.log("finding car");
       const car = await Car.findOneAndUpdate(
         { _id: carFields.id },
         {
-          $set: {
-            year: carFields.year,
-            make: carFields.make,
-            model: carFields.model
-          }
+          $set: carFields
         },
         { new: true }
       );
-      console.log(car);
-      console.log("success");
       res.json(car);
     } catch (error) {
       console.error(error.message);
