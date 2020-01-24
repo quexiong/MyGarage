@@ -4,7 +4,7 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator");
 
-const Profile = require("../../models/Car");
+const Car = require("../../models/Car");
 const User = require("../../models/User");
 
 // @route       GET api/cars/mycars
@@ -12,13 +12,11 @@ const User = require("../../models/User");
 // @access      Private
 router.get("/mycars", auth, async (req, res) => {
   try {
-    const cars = await Car.findOne({
+    const cars = await Car.find({
       user: req.user.id
-    }).populate("user");
-    if (!cars) {
-      return res
-        .status(400)
-        .json({ msg: "There are no cars for the specified user" });
+    });
+    if (cars.length == 0) {
+      return res.status(400).json({ msg: "There are no cars for this user" });
     }
     res.json(cars);
   } catch (error) {

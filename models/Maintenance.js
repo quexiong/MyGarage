@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const MaintenanceSchema = new mongoose.Schema({
-  carID: {
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user"
+  },
+  car: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "car"
   },
@@ -10,7 +14,7 @@ const MaintenanceSchema = new mongoose.Schema({
     default: Date.now
   },
   mileage: {
-    type: Double,
+    type: Number,
     required: true
   },
   job: {
@@ -18,7 +22,7 @@ const MaintenanceSchema = new mongoose.Schema({
     required: true
   },
   cost: {
-    type: Double,
+    type: Number,
     required: true
   },
   notes: {

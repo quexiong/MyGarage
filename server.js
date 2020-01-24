@@ -13,6 +13,7 @@ app.use(
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/cars", require("./routes/api/cars"));
+app.use("/api/maintenance", require("./routes/api/maintenance"));
 
 const PORT = process.env.PORT || 5000;
 
