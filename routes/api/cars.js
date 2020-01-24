@@ -7,7 +7,7 @@ const { check, validationResult } = require("express-validator");
 const Profile = require("../../models/Car");
 const User = require("../../models/User");
 
-/// @route      GET api/cars/mycars
+// @route       GET api/cars/mycars
 // @description get the current user's profile by using the user id
 // @access      Private
 router.get("/mycars", auth, async (req, res) => {
@@ -21,6 +21,126 @@ router.get("/mycars", auth, async (req, res) => {
         .json({ msg: "There are no cars for the specified user" });
     }
     res.json(cars);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error");
+  }
+});
+
+// @route       POST api/cars
+// @description Create a new car
+// @access      Private
+router.post(
+  "/",
+  [
+    auth,
+    [
+      check("year", "Year of car is required")
+        .not()
+        .isEmpty(),
+      check("make", "Make of car is required")
+        .not()
+        .isEmpty(),
+      check("model", "Model of car is required")
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    // Create car object
+    const { year, make, model } = req.body;
+    let carFields = {};
+    carFields.user = req.user.id;
+    carFields.year = year;
+    carFields.make = make;
+    carFields.model = model;
+
+    try {
+      let car = new Car(carFields);
+      await car.save();
+      res.json(car);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Server error");
+    }
+  }
+);
+
+// @route       POST api/cars/:id
+// @description Update a car
+// @access      Private
+router.put(
+  "/:id",
+  [
+    auth,
+    [
+      check("year", "Year of car is required")
+        .not()
+        .isEmpty(),
+      check("make", "Make of car is required")
+        .not()
+        .isEmpty(),
+      check("model", "Model of car is required")
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    // Create car object
+    const { year, make, model } = req.body;
+    let carFields = {};
+    carFields.id = req.params.id;
+    carFields.user = req.user.id;
+    carFields.year = year;
+    carFields.make = make;
+    carFields.model = model;
+
+    console.log(carFields);
+
+    try {
+      console.log("finding car");
+      const car = await Car.findOneAndUpdate(
+        { _id: carFields.id },
+        {
+          $set: {
+            year: carFields.year,
+            make: carFields.make,
+            model: carFields.model
+          }
+        },
+        { new: true }
+      );
+      console.log(car);
+      console.log("success");
+      res.json(car);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Server error");
+    }
+  }
+);
+
+// @route       POST api/cars/:carid
+// @description Delete car by id
+// @access      Private
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    const car = await Car.findById(req.params.id);
+    if (!car) {
+      return res.status(404).json({ msg: "Car not found" });
+    }
+    await car.remove();
+    res.json({ msg: "Car was removed" });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error");

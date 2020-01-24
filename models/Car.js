@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const CarSchema = new mongoose.Schema({
-  userID: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user"
   },

@@ -38,7 +38,6 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
     // working on registering the users
     // destructure
     // *the body will not have 'name', only email and password, so name is removed from the object
@@ -54,8 +53,6 @@ router.post(
           .status(400)
           .json({ errors: [{ message: "Invalid Credentials" }] });
       }
-      console.log(user.password);
-      console.log(password);
       // bcrypt has a method called .compare which takes a plain text password and compares it with an encrypted password
       // .compare returns a promise, so we need to use async/await
       // create a variable that is equal to await bcrypt.compare(password-user enters this when they login, user.password-this comes from the req we made to DB)
