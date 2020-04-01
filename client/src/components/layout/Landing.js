@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const Landing = () => {
   return (
@@ -12,12 +13,12 @@ export const Landing = () => {
             your car mods and maintenance records.
           </p>
           <div className="buttons">
-            <a href="register.html" className="btn btn-secondary">
+            <Link to="/register" className="btn btn-secondary">
               Sign Up
-            </a>
-            <a href="login.html" className="btn btn-secondary">
+            </Link>
+            <Link to="/login" className="btn btn-secondary">
               Login
-            </a>
+            </Link>
           </div>
         </div>
       </div>
