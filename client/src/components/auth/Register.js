@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import axios from "axios";
+// import axios from "axios"; not needed for now, will be using redux
 import { Link } from "react-router-dom";
 
 export const Register = () => {
