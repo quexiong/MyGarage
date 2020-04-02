@@ -1,26 +1,50 @@
 import React, { Fragment, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 export const Register = () => {
   const [formData, setFormData] = useState({
-    fname: "",
-    lname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     password2: ""
   });
+
+  const { firstName, lastName, email, password, password2 } = formData;
+
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
     if (password !== password2) {
       console.log("Passwords do not match!");
     } else {
-      console.log(formData);
+      console.log("success!");
+
+      // WILL DO THIS CODE WITHIN A REDUX ACTION!!!
+      // const newUser = {
+      //   firstName,
+      //   lastName,
+      //   email,
+      //   password
+      // };
+      // try {
+      //   const config = {
+      //     headers: {
+      //       "Content-Type": "application/json"
+      //     }
+      //   };
+      //   const body = JSON.stringify(newUser);
+      //   const res = await axios.post("/api/users", body, config);
+      //   console.log(res.data);
+      // } catch (error) {
+      //   console.error(error.response.data);
+      // }
     }
   };
 
-  const { fname, lname, email, password, password2 } = formData;
   return (
     <Fragment>
       <h1 className="large text-primary">Sign Up</h1>
@@ -32,8 +56,8 @@ export const Register = () => {
           <input
             type="text"
             placeholder="First Name"
-            name="fname"
-            value={fname}
+            name="firstName"
+            value={firstName}
             onChange={e => onChange(e)}
             required
           />
@@ -42,8 +66,8 @@ export const Register = () => {
           <input
             type="text"
             placeholder="Last Name"
-            name="lname"
-            value={lname}
+            name="lastName"
+            value={lastName}
             onChange={e => onChange(e)}
             required
           />
@@ -87,7 +111,7 @@ export const Register = () => {
         <input type="submit" className="btn btn-primary" value="Register" />
       </form>
       <p className="my-1">
-        Already have an account? <a href="login.html">Sign In</a>
+        Already have an account? <Link to="/login">Sign In</Link>
       </p>
     </Fragment>
   );
